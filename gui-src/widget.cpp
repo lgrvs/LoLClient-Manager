@@ -6,7 +6,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget),
     lolPathSpecified(false),
     localechangerExtracted(false),
-    appSettings(QSettings::NativeFormat, QSettings::UserScope, "lol_tool_lang", "lol_tool", this),
+    appSettings(QSettings::NativeFormat, QSettings::UserScope, "lol_tool_clientmgrs", "lol_tool_clientmgrs", this),
     locales({"en_GB", "en_US", "fr_FR", "es_ES", "ko_KR", "ja_JP", "zh_CN"})
 {
     ui->setupUi(this);
@@ -56,7 +56,7 @@ bool Widget::check_Path(QString path)
 
 bool Widget::check_extraction()
 {
-    QString dest = ui->folder_line->text() + "/loc_selection.exe";
+    QString dest = ui->folder_line->text() + "/clientmgr.exe";
     if (fileExists(dest)) {
         if (fileChecksum(dest, QCryptographicHash::Sha256).toHex() == TOOL_HASH)
             return true;
@@ -70,17 +70,17 @@ bool Widget::check_extraction()
 
 bool Widget::extractTool()
 {
-    if (fileChecksum("://resources/loc_selection.exe", QCryptographicHash::Sha256).toHex() != TOOL_HASH) {
+    if (fileChecksum("://resources/intercepmgr.exe", QCryptographicHash::Sha256).toHex() != TOOL_HASH) {
         QMessageBox::critical(this, "Can't proceed", "It seems parts of this executable have been modified and can no longer be used. Please re-download the program.");
         return false;
     }
-    QString dest = ui->folder_line->text() + "/loc_selection.exe";
+    QString dest = ui->folder_line->text() + "/clientmgr.exe";
     if (QFile::exists(dest))
         if (!QFile::remove(dest)) {
             QMessageBox::critical(this, "Error", "Extraction failed. Please try again with admin rights if the issue persists.");
             return false;
         }
-    return QFile::copy("://resources/loc_selection.exe", dest);
+    return QFile::copy("://resources/intercepmgr.exe", dest);
 }
 
 void Widget::on_how_to_button_clicked()
@@ -145,7 +145,7 @@ void Widget::on_enable_button_clicked()
         QMessageBox::critical(this, "Error", "Couldn't access LoL path. Maybe missing permission ?");
         return;
     }
-    file = ui->folder_line->text() + "/loc_selection.exe";
+    file = ui->folder_line->text() + "/clientmgr.exe";
     dest = ui->folder_line->text() + "/LeagueClient.exe";
     if (!QFile::rename(file, dest)) {
         QMessageBox::critical(this, "Error", "Couldn't access extracted path. Disabling the tool...");
@@ -167,7 +167,7 @@ void Widget::on_fastfix_button_clicked()
     if (QMessageBox::question(this, "Attention", "This option is only to be used if your LoL installation was broken because of the tool. Is it the case ?") == QMessageBox::Yes) {
         QString file = ui->folder_line->text() + "/LeagueClient.exe";
         QString dest = ui->folder_line->text() + "/og.exe";
-        QString tool = ui->folder_line->text() + "/loc_selection.exe";
+        QString tool = ui->folder_line->text() + "/clientmgr.exe";
         // Could add file exist checks, but seems unnecessary, the user's been warned
         QFile::rename(file, tool);
         QFile::rename(dest, file);

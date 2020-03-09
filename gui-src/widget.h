@@ -14,6 +14,8 @@
 #include <QList>
 #include <QTextStream>
 
+#include <QDebug>
+
 enum FileStatus {
     Exists_Writable,
     Exists_WDenied,
@@ -62,6 +64,6 @@ QByteArray fileChecksum(const QString &fileName,
 // Settings keys
 #define PATH_KEY "path"
 #define EXTRACTION_STATUS "extracted"
-#define TOOL_HASH "b39f1d3061f2b091c1700c6cd2bc823ca949f4cbe10671f1b60e8023a92fa708"
+#define TOOL_HASH "de60b16c0b6f4785ab2ed345e3feb65ada79e1caae14dc487f680a59d06329c2"
 
 #endif // WIDGET_H

@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/LoL-Old-Logo.png</file>
-        <file>resources/loc_selection.exe</file>
         <file>resources/LoL-Old-Logo.ico</file>
+        <file>resources/intercepmgr.exe</file>
     </qresource>
 </RCC>

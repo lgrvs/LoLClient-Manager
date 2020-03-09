@@ -26,6 +26,9 @@ RC_ICONS = icon.ico
 CONFIG += static
 QMAKE_LFLAGS += -static
 
+# big resources
+CONFIG += resources_big
+
 RESOURCES += \
     rc.qrc
 
