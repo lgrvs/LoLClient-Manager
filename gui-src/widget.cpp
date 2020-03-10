@@ -6,8 +6,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget),
     lolPathSpecified(false),
     localechangerExtracted(false),
-    appSettings(QSettings::NativeFormat, QSettings::UserScope, "lol_tool_clientmgrs", "lol_tool_clientmgrs", this),
-    locales({"en_GB", "en_US", "fr_FR", "es_ES", "ko_KR", "ja_JP", "zh_CN"})
+    appSettings(QSettings::NativeFormat, QSettings::UserScope, "lol_tool_clientmgrs", "lol_tool_clientmgrs", this)
 {
     ui->setupUi(this);
 
@@ -85,10 +84,9 @@ bool Widget::extractTool()
 
 void Widget::on_how_to_button_clicked()
 {
-    QMessageBox::information(this, "How to use the locale changer", "The first time you use the locale-changer, you have to extract it first by clicking the Extract button\n"
-                             "Note: LoL folder path is needed for extraction.\nOnce extraction is complete, you have to enable locale-changer every time you want to use it.\n"
-                             "Launch the Riot Client as usual, and let it update the client. Once the client is updated, and BEFORE logging in your account, enable locale-changer.\n"
-                             "Note: locale-changer can't work if you enable automatic log in, and you have to enable it every time.");
+    QMessageBox::information(this, "How to use the client intercepter", "The first time you use the client-intercepter, you have to extract it first by clicking the Extract button\n"
+                             "Note: LoL folder path is needed for extraction.\nOnce extraction is complete, you have to enable client-intercepter every time you want to use it.\n"
+                             "Launch the Riot Client as usual, and let it update the client. Once the client is updated, and BEFORE logging in your account, enable it.\n");
 }
 
 void Widget::loadSettings()
@@ -123,23 +121,6 @@ void Widget::on_enable_button_clicked()
     QString file = ui->folder_line->text() + "/LeagueClient.exe";
     QString dest = ui->folder_line->text() + "/og.exe";
     QString txtf = ui->folder_line->text() + "/chosen_locale.txt";
-
-    if (QFile::exists(txtf)) // WRITE LOCALE TO TXT FILE
-        if (!QFile::remove(txtf))
-        {
-            QMessageBox::critical(this, "Error", "Couldn't access LoL path. Maybe missing permission ?");
-            return;
-        }
-
-    QFile txtfile(txtf);
-          if(txtfile.open(QIODevice::WriteOnly | QIODevice::Text))
-          {
-              QTextStream stream(&txtfile);
-
-              stream << locales.value(ui->comboBox->currentIndex());
-
-              txtfile.close();
-          }
 
     if (!QFile::rename(file, dest)) { //RENAMES
         QMessageBox::critical(this, "Error", "Couldn't access LoL path. Maybe missing permission ?");

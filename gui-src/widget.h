@@ -44,8 +44,6 @@ private:
 
     bool lolPathSpecified, localechangerExtracted;
     QSettings appSettings;
-    QList<QString> locales;
-
 
 
 
